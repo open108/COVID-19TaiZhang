@@ -168,13 +168,9 @@ $(function(){
 	$('#taizhangquickly-form').validate({
 		ignore: '',
 		rules: {
-			myusername: { required: true },
-			id3: { required: true },
 			temperature: { required: true },
 		},
 		messages: {
-			myusername: { required: '请填写电话' },
-			id3: { required: '请填写身份证后三位' },
 			temperature: { required: '请填写今日体温' },
 		},
 		submitHandler: function (form) {
@@ -184,12 +180,10 @@ $(function(){
 				success: function (data) {
 					//dialogInfo(data.message)
 					if (data.code) {
-						setTimeout(function () { window.location.href = "/user/add/success?" + "ShopUserID=" + data.ShopUserID +"&ShopName="+ data.ShopName}, 2000);
-						// if (data.type) {
-						// 	setTimeout(function () { window.location.href = "/user/show/" + data.id }, 2000);
-						// } else {
-						// 	setTimeout(function () { window.location.href = "/user/manage" }, 2000);
-						// }
+						setTimeout(function () { window.location.href = "/yqtz/add?" 
+							+ "ShopUserID=" + data.ShopUserID + "&Temperature=" + data.Temperature
+							+ "&ReocdeID=" + data.ReocdeID 
+					}, 2000);
 					} else {
 						setTimeout(function () { $('#dialogInfo').modal('hide'); }, 1000);
 					}
@@ -228,10 +222,7 @@ $(function(){
 					dialogInfo(data.message)
 					if (data.code) {
 						setTimeout(function () {
-							window.location.href = "/yqtz/add/success?" + "ShopUserID=" + data.ShopUserID 
-							+ "&ShopName=" + data.ShopName  + "&Temperature=" + data.Temperature
-							+ "&Name=" + data.Name + "&Tel=" + data.Tel + "&Time=" + data.Time
-								+ "&RecodeID=" + data.RecodeID}, 2000);
+							window.location.href = "/yqtz/add/success?" +  "RecodeID=" + data.RecodeID}, 2000);
 						// if (data.type) {
 						// 	setTimeout(function () { window.location.href = "/user/show/" + data.id }, 2000);
 						// } else {

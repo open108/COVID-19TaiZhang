@@ -116,3 +116,28 @@ func GetRecodeYQTZ(id int64) (rerr error, recode YQTZRecode) {
 		return err, pro
 	}
 }
+
+func GetRecodeYQTZID(recode YQTZRecode) (id int64, rerr error) {
+	o := orm.NewOrm()
+
+	var pro YQTZRecode
+	var err error
+	err = o.QueryTable("pms_y_q_t_z_recode").
+		Filter("u_id", recode.UId).
+		Filter("name", recode.Name).
+		Filter("phone", recode.Phone).
+		OrderBy("-recodeid").One(&pro, "recodeid")
+	return pro.Id, err
+}
+
+// func GetRecodeYQTZ(recode YQTZRecode) (rerr error, recode YQTZRecode) {
+// 	o := orm.NewOrm()
+
+// 	pro := YQTZRecode{Id: id}
+// 	err := o.Read(&pro, "recodeid")
+// 	if nil != err {
+// 		return err, pro
+// 	} else {
+// 		return err, pro
+// 	}
+// }

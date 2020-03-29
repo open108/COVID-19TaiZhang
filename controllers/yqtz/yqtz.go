@@ -62,10 +62,36 @@ type AddRecode struct {
 func (this *AddRecode) Get() {
 	//修改成疫情问诊流行病学史参考问诊表
 	var pro YQTZRecode
-	var err error
-	pro.ShopID, err = this.GetInt64("ShopUserID")
+	//var err error
+	ShopID, err := this.GetInt64("ShopUserID")
+
+	//赋默认值
+	pro.Sex = 1
+	pro.Temperature = "3"
+
 	if err != nil {
 		pro.ShopID = 9
+	} else {
+		pro.ShopID = ShopID
+	}
+	//识别是否填充
+	RecodeID := this.GetString("ReocdeID")
+	if RecodeID != "" {
+		pro.Id, err = strconv.ParseInt(RecodeID, 10, 64)
+		if err == nil {
+			err, pro = GetRecodeYQTZ(pro.Id)
+			if err == nil {
+				//查询库中的数据补全
+				Temperature := this.GetString("Temperature")
+				pro.Temperature = Temperature
+
+				pro.WjSignaturePic = ""
+				pro.Ip = ""
+			}
+		} else {
+
+		}
+		pro.ShopID = ShopID
 	}
 
 	//动态获取诊所名字
@@ -75,9 +101,6 @@ func (this *AddRecode) Get() {
 		pro.ShopID = 9
 		_, clinic = GetClinics(pro.ShopID)
 	}
-
-	pro.Sex = 1
-	pro.Temperature = "3"
 
 	this.Data["pro"] = pro
 	this.Data["ShopName"] = clinic.ShopName
@@ -93,15 +116,33 @@ func (this *AddRecode) Post() {
 	var err error
 	var recode YQTZRecode
 	recode.ShopID, _ = this.GetInt64("ShopUserID")
+	// var clinic Clinics
+	// err, clinic = GetClinics(pro.ShopID)
+	// if err != nil {
+	// 	pro.ShopID = 9
+	// 	_, clinic = GetClinics(pro.ShopID)
+	// }
 
 	if submitType == "quicklyS" {
+		var pro YQTZRecode
+
 		//快速提交的处理
-		recode.Name = this.GetString("myusername")
-		id3 := this.GetString("id3")
-		temperature := this.GetString("temperature")
+		pro.Name = this.GetString("uname")
+		pro.UId = this.GetString("uID")
+		pro.Phone = this.GetString("utelphone")
 
-		beego.Debug(id3, temperature)
+		Temperature := this.GetString("temperature")
 
+		uid, err := GetRecodeYQTZID(pro)
+		if err == nil && uid > 0 {
+			this.Data["json"] = map[string]interface{}{"code": 1, "message": "您的信息自动完成填充，请核查信息并且，签字确认！",
+				"ShopUserID": recode.ShopID, "Temperature": Temperature, "ReocdeID": uid}
+
+		} else {
+			this.Data["json"] = map[string]interface{}{"code": 0, "message": "您没有填报过，请填报完整信息！"}
+		}
+		beego.Debug(recode, pro, uid, err)
+		this.ServeJSON()
 	} else {
 		//完整提交插入的信息处理 `orm:"type(json);null;size(8192)"`
 		recode.WjSignaturePic = this.GetString("jSignaturePic")
@@ -138,12 +179,11 @@ func (this *AddRecode) Post() {
 			this.Data["json"] = map[string]interface{}{"code": 0, "message": "填报信息有错，请您查正后再试试！"}
 		} else {
 			//记录输入成功返回网页下一步操作
-			t := time.Unix(int64(recode.Lasted), 0)
-			date := t.Format("2006-01-02 15:04:05")
+			// t := time.Unix(int64(recode.Lasted), 0)
+			// date := t.Format("2006-01-02 15:04:05")
 
 			this.Data["json"] = map[string]interface{}{"code": 1, "message": "问诊完成",
-				"ShopUserID": recode.ShopID, "ShopName": "金牛碧林诊所", "Time": date, "Temperature": recode.Temperature,
-				"Name": recode.Name, "Tel": recode.Phone, "RecodeID": recode.Id}
+				"RecodeID": recode.Id}
 			this.ServeJSON()
 
 		}

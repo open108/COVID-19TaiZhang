@@ -29,26 +29,35 @@
           <section class="panel">
             <header class="panel-heading"> {{.title}} </header>
             <div class="panel-body">
-            <!--
-              <form class="form-horizontal adminex-form" id="taizhangquickly-form">
+            
+              <form class="form-horizontal adminex-form" id="taizhangquickly-form"  {{if eq 0 .pro.Id}}{{else}}style='display:none;'{{end}} >
 
                 <header><b> 基本信息 </b></header>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">手机号码</label>
+                  <label class="col-sm-2 control-label">姓名</label>
                   <div class="col-sm-10">
-                    <input type="text" name="myusername"  value="{{.user.Username}}" class="form-control" placeholder="请填写手机号">       </div>
+                    <input type="text" id = "q_uname" name="uname"  value="" class="form-control" placeholder="请填写名字">       </div>
                 </div>      
 
                 <div class="form-group">
-                  <label class="col-sm-2 col-sm-2 control-label">身份证号后三位</label>
+                  <label class="col-sm-2 col-sm-2 control-label">本人电话</label>
                   <div class="col-sm-10">
-                    <input type="text" name="id3"  value="" class="form-control" placeholder="身份证号后三位">
+                    <input type="text" id="q_utelphone" name="utelphone" value="" class="form-control" placeholder="请输入您的电话">
                   </div>
                 </div>
+
+                <div class="form-group">
+                  <label class="col-sm-2 col-sm-2 control-label">身份证号</label>
+                  <div class="col-sm-10">
+                    <input type="text" id="q_Uid" name="uID" value="" class="form-control" placeholder="请输入您的身份证号">
+                  </div>
+                </div>
+
                 <div class="form-group">
                   <label class="col-sm-2 col-sm-2 control-label">检测体温</label>
                   <div class="col-sm-10">
-                    <input type="text" name="temperature"  value="" class="form-control" placeholder="请输入检测的体温">
+                    <input type="text" id="q_temperature" name="temperature" value="{{.pro.Temperature}}" class="form-control"
+                      placeholder="请输入检测的体温">
                     <h5>单位(摄氏度)</h5>
                   </div>
                 </div>
@@ -59,12 +68,12 @@
                   <div class="col-lg-10" align = "left">
                     <input type="hidden" name="ShopUserID" value="{{.pro.ShopID}}">
                     <input type="hidden" name="subType" value="quicklyS">
-                    <h5 class="container-fluid ">如果，您在之前填报过本系统，可以通过电话号和身份证号后三位快速填报帮您补全个人信息。但是,<span>流行病学信息请根据实际情况调整!</span></h5>
+                    <h5 class="container-fluid ">如果，您在之前填报过本系统，请填写最新的温度签名后提交数据。流行病学信息请根据实际情况调整!</span></h5>
                     <button type="submit" class="btn btn-primary">快速填报</button>
                   </div>
                 </div>
                 </form>
-                -->
+               
 
                 <!-- 完整问卷调查表 header section end-->
                 <form class="form-horizontal adminex-form" id="taizhangprofile-form">
@@ -80,7 +89,7 @@
                   <div class="col-sm-10">
                     <label class="col-sm-2 col-sm-2 control-label">告知情况</label>
                     <label class="radio-inline col-sm-2 col-sm-2">
-                    <input type="radio" name="pfgaozhi" value="1" >
+                    <input type="radio" id = "f_pfgaozhi" name="pfgaozhi" value="1" {{if eq 1 .pro.Wpfgaozhi}}checked{{end}}>
                     已经告知 </label>
                   </div>
                 </div>
@@ -91,10 +100,10 @@
                   <div class="col-sm-10">
                     <label class="col-sm-2 col-sm-2 control-label">旅行或居住</label>
                     <label class="radio-inline">
-                    <input type="radio" name="whlxshi" value="1">
+                    <input type="radio" id = "f_whlxshi" name="whlxshi" value="1" {{if eq 1 .pro.Wwhlxshi}}checked{{end}} >
                     是 </label>
                     <label class="radio-inline">
-                    <input type="radio" name="whlxshi" value="2">
+                    <input type="radio" id = "f_whlxshi" name="whlxshi" value="2 {{if eq 2 .pro.Wwhlxshi}}checked{{end}}">
                     否 </label>
                   </div>
                 </div>
@@ -104,10 +113,10 @@
                   <div class="col-sm-10">
                     <label class="col-sm-2 col-sm-2 control-label">是否接触</label>
                     <label class="radio-inline">
-                    <input type="radio" name="whjcfare" value="1">
+                    <input type="radio" id = "f_whjcfare" name="whjcfare" value="1" {{if eq 1 .pro.Wwhjcfare}}checked{{end}}>
                     是 </label>
                     <label class="radio-inline">
-                    <input type="radio" name="whjcfare" value="2">
+                    <input type="radio" id = "f_whjcfare" name="whjcfare" value="2" {{if eq 2 .pro.Wwhjcfare}}checked{{end}}>
                     否 </label>
                   </div>
                 </div>
@@ -117,10 +126,10 @@
                   <div class="col-sm-10">
                     <label class="col-sm-2 col-sm-2 control-label">是否接触</label>
                     <label class="radio-inline">
-                    <input type="radio" name="whjchuxingdao" value="1">
+                    <input type="radio" id = "f_whjchuxingdao" name="whjchuxingdao" value="1"{{if eq 1 .pro.Wwhjchuxingdao}}checked{{end}}>
                     是 </label>
                     <label class="radio-inline">
-                    <input type="radio" name="whjchuxingdao" value="2">
+                    <input type="radio" id = "f_whjchuxingdao" name="whjchuxingdao" value="2"{{if eq 2 .pro.Wwhjchuxingdao}}checked{{end}}>
                     否 </label>
                   </div>
                 </div>
@@ -131,10 +140,10 @@
                   <div class="col-sm-10">
                     <label class="col-sm-2 col-sm-2 control-label">旅行或居住</label>
                     <label class="radio-inline">
-                    <input type="radio" name="qtlxshi" value="1">
+                    <input type="radio" id = "f_qtlxshi" name="qtlxshi" value="1" {{if eq 1 .pro.Wqtlxshi}}checked{{end}}>
                     是 </label>
                     <label class="radio-inline">
-                    <input type="radio" name="qtlxshi" value="2">
+                    <input type="radio" id = "f_qtlxshi" name="qtlxshi" value="2" {{if eq 2 .pro.Wqtlxshi}}checked{{end}}>
                     否 </label>
                   </div>
                 </div>
@@ -144,10 +153,10 @@
                   <div class="col-sm-10">
                     <label class="col-sm-2 col-sm-2 control-label">是否接触</label>
                     <label class="radio-inline">
-                    <input type="radio" name="qtjcfare" value="1">
+                    <input type="radio" id = "f_qtjcfare" name="qtjcfare" value="1"  {{if eq 1 .pro.Wqtjcfare}}checked{{end}}>
                     是 </label>
                     <label class="radio-inline">
-                    <input type="radio" name="qtjcfare" value="2">
+                    <input type="radio" id = "f_qtjcfare" name="qtjcfare" value="2"  {{if eq 2 .pro.Wqtjcfare}}checked{{end}}>
                     否 </label>
                   </div>
                 </div>
@@ -157,10 +166,10 @@
                   <div class="col-sm-10">
                     <label class="col-sm-2 col-sm-2 control-label">是否接触</label>
                     <label class="radio-inline">
-                    <input type="radio" name="qtjchuxingdao" value="1">
+                    <input type="radio" id = "f_qtjchuxingdao" name="qtjchuxingdao" value="1" {{if eq 1 .pro.Wqtjchuxingdao}}checked{{end}}>
                     是 </label>
                     <label class="radio-inline">
-                    <input type="radio" name="qtjchuxingdao" value="2">
+                    <input type="radio" id = "f_qtjchuxingdao" name="qtjchuxingdao" value="2" {{if eq 2 .pro.Wqtjchuxingdao}}checked{{end}}>
                     否 </label>
                   </div>
                 </div>
@@ -170,10 +179,10 @@
                   <div class="col-sm-10">
                     <label class="col-sm-2 col-sm-2 control-label">是否接触</label>
                     <label class="radio-inline">
-                    <input type="radio" name="jjxingfabing" value="1">
+                    <input type="radio" id = "f_jjxingfabing" name="jjxingfabing" value="1" {{if eq 1 .pro.Wjjxingfabing}}checked{{end}}>
                     是 </label>
                     <label class="radio-inline">
-                    <input type="radio" name="jjxingfabing" value="2">
+                    <input type="radio" id = "f_jjxingfabing" name="jjxingfabing" value="2" {{if eq 2 .pro.Wjjxingfabing}}checked{{end}}>
                     否 </label>
                   </div>
                 </div>
@@ -185,10 +194,10 @@
                   <div class="col-sm-10">
                     <label class="col-sm-2 col-sm-2 control-label">是否接触</label>
                     <label class="radio-inline">
-                    <input type="radio" name="jjxinxinghuanzhe" value="1" >
+                    <input type="radio" id = "f_jjxinxinghuanzhe" name="jjxinxinghuanzhe" value="1" {{if eq 1 .pro.Wjjxinxinghuanzhe}}checked{{end}}>
                     是 </label>
                     <label class="radio-inline">
-                    <input type="radio" name="jjxinxinghuanzhe" value="2">
+                    <input type="radio" id = "f_jjxinxinghuanzhe" name="jjxinxinghuanzhe" value="2" {{if eq 2 .pro.Wjjxinxinghuanzhe}}checked{{end}}>
                     否 </label>
                   </div>
                 </div>
@@ -197,60 +206,60 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label">姓名</label>
                   <div class="col-sm-10">
-                    <input type="text" name="uname"  value="" class="form-control" placeholder="请输入您的名字">
+                    <input type="text" id = "f_uname" name="uname"  value="{{.pro.Name}}" class="form-control" placeholder="请输入您的名字">
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 col-sm-2 control-label">性别</label>
                   <div class="col-sm-10">
                     <label class="radio-inline">
-                    <input type="radio" name="sex" value="1" {{if eq 1 .pro.Sex}}checked{{end}}>
-                    男 </label>
+                    <input type="radio" id = "f_sex" name="sex" value="1" {{if eq 1 .pro.Sex}}checked{{end}}>
+                    男 </label>  
                     <label class="radio-inline">
-                    <input type="radio" name="sex" value="2" {{if eq 2 .pro.Sex}}checked{{end}}>
+                    <input type="radio" id = "f_sex" name="sex" value="2" {{if eq 2 .pro.Sex}}checked{{end}}>
                     女 </label>
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 col-sm-2 control-label">出生年月日</label>
                   <div class="col-sm-10">
-                    <input type="text" name="birth" id="default-date-picker"  value="{{.pro.Birth}}" class="form-control" placeholder="请填您的生日">
+                    <input type="text" id = "f_birth" name="birth"  value="{{.pro.Birth}}" class="form-control" placeholder="请填您的生日">
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label">身份证号</label>
                   <div class="col-sm-10">
-                    <input type="text" name="uID"  value="" class="form-control" placeholder="请输入您的身份证号">
+                    <input type="text" id="f_Uid" name="uID"  value="{{.pro.UId}}" class="form-control" placeholder="请输入您的身份证号">
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label">现居住地址</label>
                   <div class="col-sm-10">
-                    <input type="text" name="uaddr"  value="" class="form-control" placeholder="请输入您的地址详细地址">
+                    <input type="text" id="f_uaddr" name="uaddr"  value="{{.pro.Address}}" class="form-control" placeholder="请输入您的地址详细地址">
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label">职业</label>
                   <div class="col-sm-10">
-                    <input type="text" name="uprofession"  value="" class="form-control" placeholder="请输入您的职业">
+                    <input type="text" id="f_uprofession" name="uprofession"  value="{{.pro.Professsion}}" class="form-control" placeholder="请输入您的职业">
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label">本人电话</label>
                   <div class="col-sm-10">
-                    <input type="text" name="utelphone"  value="" class="form-control" placeholder="请输入您的电话">
+                    <input type="text" id="f_utelphone" name="utelphone"  value="{{.pro.Phone}}" class="form-control" placeholder="请输入您的电话">
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label">亲属电话</label>
                   <div class="col-sm-10">
-                    <input type="text" name="uqtelphone"  value="" class="form-control" placeholder="请输入您的亲属的电话">
+                    <input type="text" id="f_uqtelphone" name="uqtelphone"  value="{{.pro.QSTel}}" class="form-control" placeholder="请输入您的亲属的电话">
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 col-sm-2 control-label">检测体温</label>
                   <div class="col-sm-10">
-                    <input type="text" name="temperature"  value={{.pro.Temperature}} class="form-control" placeholder="请输入检测的体温">
+                    <input type="text" id="f_temperature" name="temperature"  value="{{.pro.Temperature}}" class="form-control" placeholder="请输入检测的体温">
                     <h5>单位(摄氏度)</h5>
                   </div>
                 </div>
@@ -288,18 +297,68 @@
 <script src="/static/js/jquery-ui-1.10.3.min.js"></script>
 <script src="/static/js/datepicker-zh-CN.js"></script>
 
+
 <!-- 数字签名 -->
 <script language="JavaScript" type="text/javascript" src="/static/js/jSignature.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="/static/js/jquery.cookie.js"></script>
  <script type="text/javascript">
 
+
+  
  $(document).ready(function() {
    $("#signature").jSignature();
+  try {
+    cookvalue = $.cookie('f_uname');
+    if (cookvalue != null){
+      $("#q_uname").attr('value', cookvalue);
+    }
+    else{
+      $("#taizhangquickly-form").attr('style', 'display:none;');
+    }
+
+    cookvalue = $.cookie('f_Uid');
+    if (cookvalue != null) {
+      $("#q_Uid").attr('value', cookvalue);
+    }
+    else {
+      $("#taizhangquickly-form").attr('style', 'display:none;');
+    }
+
+    cookvalue = $.cookie('f_utelphone');
+    if (cookvalue != null) {
+      $("#q_utelphone").attr('value', cookvalue);
+    }
+    else {
+     $("#taizhangquickly-form").attr('style', 'display:none;');
+    }
+
+
+   } catch (er) {
+   }
+  //  $.cookie('the_uID', 'runoob2', { expires: 7, path: '/' });
+  //  name2 = $.cookie('name2');
+  //  $("#f_Uid").value(name2);
+  //  $("#taizhangquickly-form").attr('style', 'display:none;');
+
 
   document.getElementById("rsets").onclick=function(){
    $("#signature").jSignature('reset');
 };
 
   document.getElementById("submitbase").onclick=function(){
+    //基本信息缓存
+    if (document.getElementById("f_uname").value != ""){
+      $.cookie('f_uname', document.getElementById("f_uname").value, { expires: 90 }, { domain: 'mamios.com' });
+    }
+    
+    if (document.getElementById("f_Uid").value != "") {
+    $.cookie('f_Uid', document.getElementById("f_Uid").value, { expires: 90 }, { domain: 'mamios.com' });
+    }
+
+    if (document.getElementById("f_utelphone").value != "") {
+    $.cookie('f_utelphone', document.getElementById("f_utelphone").value, { expires: 90 }, { domain: 'mamios.com' });
+    }
+    //签名提交
     document.getElementById("jSignaturePic").value = $("#signature").jSignature("getData", "base30");
 };
 
@@ -309,9 +368,9 @@
  <!-- 日期填表 -->
 <script>
 $(function(){
-	$('#default-date-picker').datepicker('option', $.datepicker.regional['zh-CN']); 	
-	$('#default-date-picker').datepicker({
-        dateFormat: 'yy-mm-dd',
+	$('#f_birth').datepicker('option', $.datepicker.regional['zh-CN']); 	
+	$('#f_birth').datepicker({
+    dateFormat: 'yy-mm-dd',
 		changeMonth: true,
 		changeYear: true,
 		yearRange:'-60:+0'

@@ -13,9 +13,6 @@ OPMS管理系统本身是是PMS+OA，项目+办公管理。符合日常项目和
 
 新冠疫情比较凶猛，最好的方案就是隔离。区块化网格管理，管理需要大量登记人员出入情况和健康情况，有效的防控。但是，现在都是手工字纸表格登记台账，不卫生，不安全，数据不好收集汇总。所以，根据现有的调查表建立了一个人于流动台账系统。现在基本功能已经完善就再github上发布出来给大家分享。
 
-Yanji 211, the author of the epidemic, was kept at home and made a contribution to the epidemic in his spare time.
-
-The epidemic situation of Xinguan is fierce. The best plan is isolation. Block grid management, management needs a large number of registered personnel access and health, effective prevention and control. However, it is not hygienic, safe and easy to collect and summarize the data. Therefore, according to the existing questionnaire, a personal current account system has been established. Now that the basic functions have been improved, it will be released on GitHub for sharing.
 作者的邮箱
 
 yanji211@163.com 有什么问题可以邮件联系
